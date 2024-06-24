@@ -1,10 +1,9 @@
+import Layout from '@/components/template/Layout';
+
 export default function Home() {
   return (
-    <div className={`
-      flex justify-center items-center h-screen
-      bg-gradient-to-r from-green-500 to-blue-500
-    `}>
-      <h1>Admin</h1>
-    </div>
+      <Layout title="Pagina inicial" subtitle="Estamos construindo o template Admin">
+        <h3>Conteudo</h3>
+      </Layout>
   );
 }
