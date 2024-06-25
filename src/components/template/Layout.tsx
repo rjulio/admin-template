@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import SideMenu from '@/components/template/SideMenu';
 import Header from '@/components/template/Header';
 import Content from '@/components/template/Content';
+
+import useAppContext from '@/data/hooks/useAppContext';
 
 interface LayoutProps {
 	title: string;
@@ -9,8 +12,13 @@ interface LayoutProps {
 }
 
 export default function Layout(props: LayoutProps) {
+	const { theme, changeTheme } = useAppContext();
+
 	return (
-		<div className={`flex h-screen w-screen`}>
+		<div className={`
+			${theme} 
+			flex h-screen w-screen
+		`}>
 			<SideMenu />
 			<div className={`
 				flex flex-col bg-gray-300 dark:bg-gray-800
@@ -21,6 +29,7 @@ export default function Layout(props: LayoutProps) {
 					subtitle={ props.subtitle } />
 				<Content>
 					{ props.children }
+					<button onClick={ changeTheme }>teste change theme</button>
 				</Content>
 			</div>
 		</div>
