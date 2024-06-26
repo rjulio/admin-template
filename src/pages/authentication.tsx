@@ -1,17 +1,29 @@
 import { useState } from 'react';
 
+import useAuthContext from '@/data/hooks/useAuthContext';
+import { IconWarning } from '@/components/icons';
 import Input from '@/components/auth/Input';
 
 export default function Authentication() {
+	const [error, setError] = useState(null);
 	const [mode, setMode] = useState<'login'|'register'>('login');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
+	const { user, loginGoogle } = useAuthContext();
+
+	function showError(msg, time = 5) {
+		setError(msg);
+		setTimeout(() => setError(null), time * 1000);
+	}
+
 	function submit() {
 		if (mode === 'login') {
 			console.info('login');
+			showError('Ocorreu um erro.');
 		} else {
 			console.info('register');
+			showError('Ocorreu um erro.');
 		}
 	}
 
@@ -32,12 +44,18 @@ export default function Authentication() {
 				<h1 className={`
 					text-xl font-bold mb-5
 				`}>
-					{
-						mode === 'login' ? 
-							'Entre com a sua conta' : 
-							'Cadastre-se na plataforma'
-					}
+					{ mode === 'login' ? 'Entre com a sua conta' : 'Cadastre-se na plataforma' }
 				</h1>
+				{ error && (<div className={`
+								flex items-center
+								bg-red-400 text-white
+								py-3 px-5 my-2
+								border border-red-700 rounded-lg
+							`}>
+								{ IconWarning() }
+								<span className="ml-3">{ error }</span>
+							</div>)
+				}
 				<Input 
 					type="email"
 					label="Email" 
@@ -67,7 +85,7 @@ export default function Authentication() {
 						w-full bg-red-500 hover:bg-red-400
 						text-white rounded-lg px-4 py-3
 					`}
-					onClick={ submit }>
+					onClick={ loginGoogle }>
 					Entrar com o google
 				</button>
 
