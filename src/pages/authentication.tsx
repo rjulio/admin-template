@@ -10,20 +10,22 @@ export default function Authentication() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
-	const { user, loginGoogle } = useAuthContext();
+	const { login, loginGoogle, register } = useAuthContext();
 
 	function showError(msg, time = 5) {
 		setError(msg);
 		setTimeout(() => setError(null), time * 1000);
 	}
 
-	function submit() {
-		if (mode === 'login') {
-			console.info('login');
-			showError('Ocorreu um erro.');
-		} else {
-			console.info('register');
-			showError('Ocorreu um erro.');
+	async function submit() {
+		try {
+			if (mode === 'login') {
+				await login(email, password);
+			} else {
+				await register(email, password);
+			}
+		} catch(e) {
+			showError(e?.message ?? 'Erro desconhecido.');
 		}
 	}
 

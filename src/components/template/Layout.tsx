@@ -2,6 +2,8 @@ import { useState } from 'react';
 import SideMenu from '@/components/template/SideMenu';
 import Header from '@/components/template/Header';
 import Content from '@/components/template/Content';
+import ForceAuth from '@/components/auth/ForceAuth';
+import forceAuth from '@/functions/forceAuth';
 
 import useAppContext from '@/data/hooks/useAppContext';
 
@@ -14,24 +16,47 @@ interface LayoutProps {
 export default function Layout(props: LayoutProps) {
 	const { theme, changeTheme } = useAppContext();
 
+	// using forceAuth as component
 	return (
-		<div className={`
-			${theme} 
-			flex h-screen w-screen
-		`}>
-			<SideMenu />
+		<ForceAuth>	
 			<div className={`
-				flex flex-col bg-gray-300 dark:bg-gray-800
-				w-full p-7
+				${theme} 
+				flex h-screen w-screen
 			`}>
-				<Header 
-					title={ props.title } 
-					subtitle={ props.subtitle } />
-				<Content>
-					{ props.children }
-					<button onClick={ changeTheme }>teste change theme</button>
-				</Content>
+				<SideMenu />
+				<div className={`
+					flex flex-col bg-gray-300 dark:bg-gray-800
+					w-full p-7
+				`}>
+					<Header 
+						title={ props.title } 
+						subtitle={ props.subtitle } />
+					<Content>
+						{ props.children }
+					</Content>
+				</div>
 			</div>
-		</div>
+		</ForceAuth>
 	);
+
+	// using forceAuth as function
+	// return forceAuth(
+	// 	<div className={`
+	// 		${theme} 
+	// 		flex h-screen w-screen
+	// 	`}>
+	// 		<SideMenu />
+	// 		<div className={`
+	// 			flex flex-col bg-gray-300 dark:bg-gray-800
+	// 			w-full p-7
+	// 		`}>
+	// 			<Header 
+	// 				title={ props.title } 
+	// 				subtitle={ props.subtitle } />
+	// 			<Content>
+	// 				{ props.children }
+	// 			</Content>
+	// 		</div>
+	// 	</div>
+	// );
 }

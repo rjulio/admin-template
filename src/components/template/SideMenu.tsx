@@ -2,10 +2,14 @@ import Logo from '@/components/template/Logo';
 import SideMenuItem from '@/components/template/SideMenuItem';
 import { IconHome, IconSettings, IconBell, IconLogout } from '@/components/icons';
 
+import useAuthContext from '@/data/hooks/useAuthContext';
+
 interface SideMenuProps {
 }
 
 export default function SideMenu(props: SideMenuProps) {
+	const { logOut } = useAuthContext();
+
 	return (
 		<aside className={`
 			flex flex-col
@@ -37,9 +41,10 @@ export default function SideMenu(props: SideMenuProps) {
 				<SideMenuItem 
 					icon={ IconLogout }
 					text="Sair"
-					onClick={ () =>  console.info('clicou') }
+					onClick={ logOut }
 					className={`
-						text-red-600 hover:bg-red-400 hover:text-white
+						text-red-600 
+						hover:bg-red-400 hover:text-white
 						dark:text-red-400 dark:hover:text-white
 					`} />
 			</ul>

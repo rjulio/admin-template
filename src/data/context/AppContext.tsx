@@ -1,9 +1,9 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 
 type Theme = 'dark' | '';
 
 interface AppContextProps {
-	theme?: Theme,
+	theme?: string,
 	changeTheme: () => void;
 }
 
@@ -13,11 +13,18 @@ const AppContext = createContext<AppContextProps>({
 });
 
 export function AppProvider(props) {
-	const [theme, setTheme] = useState<Theme>('dark');
+	const [theme, setTheme] = useState('dark');
 
 	function changeTheme() {
-		setTheme(theme === '' ? 'dark' : '');
+		const newTheme = theme === '' ? 'dark' : '';
+		localStorage.setItem('theme', newTheme)
+		setTheme(newTheme);
 	}
+
+	useEffect(() => {
+		const theme = localStorage.getItem('theme')
+		setTheme(theme);
+	}, []);
 
 	return (
 		<AppContext.Provider value={
